@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // }
 
 // Only has the server listening if it can successfully connect to the database
-MongoClient.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds261838.mlab.com:61838/dine-amite`, (err, client) => {
+MongoClient.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds229549.mlab.com:29549/bakery-site`, (err, client) => {
     if (err) return console.log(err)
     db = client.db("dine-amite") // whatever your database name is
     app.listen(process.env.PORT || 8080, () => {
@@ -45,4 +45,9 @@ MongoClient.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds2
 
 app.get("/", (req, res) => {
     res.sendFile("index.html")
+})
+
+app.post("/test", (req, res)=>{
+    console.log("hello express");
+    res.json("hello react");
 })
