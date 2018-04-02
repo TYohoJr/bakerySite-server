@@ -1,16 +1,19 @@
-var express = require("express");
-var bodyParser = require('body-parser');
-var app = express();
-var MongoClient = require('mongodb').MongoClient;
+const express = require("express");
+const bodyParser = require('body-parser');
+const app = express();
+const MongoClient = require('mongodb').MongoClient;
+const morgan = require('morgan');
 // var bcrypt = require('bcrypt');
 // const saltRounds = 10;
 // var jwt = require('jsonwebtoken');
-var path = require('path')
+const path = require('path');
+var pg = require('pg');
 require('dotenv').config();
 
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 // function verifyToken(req, res, next) {
 //     var token = req.body.token;
@@ -29,17 +32,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     }
 // }
 
-// Only has the server listening if it can successfully connect to the database
-MongoClient.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds229549.mlab.com:29549/bakery-site`, (err, client) => {
+// var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:5432@localhost/postgres";
+
+
+// var client = new pg.Client(conString);
+// client.connect((err) => {
+//   if (err) {
+//     return console.error(err);
+//   } else {
+//     console.log('successfully connected to postgres');
+//     app.listen(5000, function () {
+//       console.log("Listening on 5000");
+//     });
+//   }
+// });
+
+MongoClient.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds261838.mlab.com:61838/dine-amite`, (err, client) => {
     if (err) return console.log(err)
     db = client.db("dine-amite") // whatever your database name is
-    app.listen(process.env.PORT || 8080, () => {
-        let activePORT = process.env.PORT;
-        if (activePORT) {
-            console.log(`listening on ${activePORT}`)
-        } else {
-            console.log(`listening on http://localhost:8080/`)
+    app.listen(process.env.PORT || 5000, () => {
+        if(process.env.PORT){
+            console.log(`listening on port ${process.env.PORT}`)
         }
+        console.log("listening on 5000")
     })
 })
 
