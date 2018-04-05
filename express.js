@@ -58,3 +58,8 @@ app.post('/submitOrder', (req, res) => {
         }
     });
 });
+
+app.post("/serverTest", (req, res)=>{
+    console.log("Server Test Log Success");
+    res.json("Success!");
+})
