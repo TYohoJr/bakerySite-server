@@ -20,8 +20,12 @@ client.connect((err) => {
         return console.error(err);
     } else {
         console.log('successfully connected to postgres');
-        app.listen(5000, function () {
-            console.log("Listening on 5000");
+        app.listen(process.env.PORT || 5000, function () {
+            if (process.env.PORT) {
+                console.log(`listening on port: ${process.env.PORT}`)
+            } else {
+                console.log("Listening on 5000");
+            }
         });
     }
 });
@@ -59,7 +63,7 @@ app.post('/submitOrder', (req, res) => {
     });
 });
 
-app.post("/serverTest", (req, res)=>{
+app.post("/serverTest", (req, res) => {
     console.log("Server Test Log Success");
     res.json("Success!");
 })
