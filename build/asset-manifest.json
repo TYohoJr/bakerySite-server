@@ -1,8 +1,8 @@
 {
-  "main.css": "static/css/main.1de38148.css",
-  "main.css.map": "static/css/main.1de38148.css.map",
-  "main.js": "static/js/main.07cda54d.js",
-  "main.js.map": "static/js/main.07cda54d.js.map",
+  "main.css": "static/css/main.e9d93ffd.css",
+  "main.css.map": "static/css/main.e9d93ffd.css.map",
+  "main.js": "static/js/main.86a6aa53.js",
+  "main.js.map": "static/js/main.86a6aa53.js.map",
   "static/media/cake1.jpg": "static/media/cake1.c6bc152c.jpg",
   "static/media/cake10.jpg": "static/media/cake10.8bb9235e.jpg",
   "static/media/cake11.jpg": "static/media/cake11.c9a69801.jpg",
@@ -28,5 +28,6 @@
   "static/media/cake8.jpg": "static/media/cake8.59b6250f.jpg",
   "static/media/cake9.jpg": "static/media/cake9.0f1f8ba3.jpg",
   "static/media/instagram.jpg": "static/media/instagram.76008bb9.jpg",
-  "static/media/laura-yoho.jpg": "static/media/laura-yoho.9516ec6b.jpg"
+  "static/media/laura-yoho.jpg": "static/media/laura-yoho.9516ec6b.jpg",
+  "static/media/servings-guide.jpg": "static/media/servings-guide.1fef2dc1.jpg"
 }

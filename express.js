@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const path = require('path');
 var pg = require('pg');
 require('dotenv').config();
+var stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json({ type: 'application/json' }));
@@ -13,6 +14,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:5432@localhost/postgres";
+stripe.customers.create(
+    { email: 'customer@example.com' },
+    function (err, customer) {
+        err; // null if no error occurred
+        customer; // the created customer object
+    }
+);
+
+app.post("/save-stripe-token", (req, res) => {
+    console.log(req.body);
+})
 
 var client = new pg.Client(conString);
 client.connect((err) => {
@@ -62,6 +74,12 @@ app.post('/submitOrder', (req, res) => {
         }
     });
 });
+
+app.post("/submitPaidOrder", (req, res)=>{
+    console.log(req.body);
+    console.log("paid order was submitted");
+    res.json("success?");
+})
 
 app.post("/serverTest", (req, res) => {
     console.log("Server Test Log Success");
