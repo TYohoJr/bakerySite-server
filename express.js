@@ -75,9 +75,25 @@ app.post('/submitOrder', (req, res) => {
     });
 });
 
-app.post("/submitPaidOrder", (req, res)=>{
+app.post("/createOrder", (req, res) => {
     console.log(req.body);
-    console.log("paid order was submitted");
+    res.json({
+        message: "Order Submitted!",
+        details: req.body
+    })
+})
+
+app.post("/submitPaidOrder", (req, res) => {
+    console.log(req.body);
+    client.query(`insert into users (username) values ('${req.body.username}') returning *`, (err, result) => {
+        if (err) {
+            res.json(err);
+            console.error(err);
+        } else {
+            let user = result.rows[0];
+            res.json(user)
+        }
+    });
     res.json("success?");
 })
 
