@@ -76,16 +76,10 @@ app.post('/submitOrder', (req, res) => {
 });
 
 app.post("/createOrder", (req, res) => {
+    let form = req.body;
     console.log(req.body);
-    res.json({
-        message: "Order Submitted!",
-        details: req.body
-    })
-})
-
-app.post("/submitPaidOrder", (req, res) => {
-    console.log(req.body);
-    client.query(`insert into users (username) values ('${req.body.username}') returning *`, (err, result) => {
+    client.query(`insert into orders (name, email, number, address_street, address_city, address_state, address_zip, date_needed, layer_1_size, layer_2_size, layer_3_size, layer_4_size, flavor, frosting_fondant, delivery, plates, comments) values ('${form.info.username}', '${form.info.email}', '${form.info.number}', '${form.info.addressStreet}', '${form.info.addressCity}', '${form.info.addressState}', '${form.info.addressZip}', '${form.info.dateNeeded}', '${form.order.layerOneSize}', '${form.order.layerTwoSize}', '${form.order.layerThreeSize}', '${form.order.layerFourSize}', '${form.order.flavor}', '${form.order.frostingFondant}', '${form.order.delivery}', '${form.order.plates}', '${form.order.additionalComments}') returning *`, (err, result) => {
+        // client.query(`insert into users (username) values ('${form.info.username}') returning *`, (err, result) => {
         if (err) {
             res.json(err);
             console.error(err);
@@ -94,6 +88,31 @@ app.post("/submitPaidOrder", (req, res) => {
             res.json(user)
         }
     });
+})
+
+app.post("/orderLookup", (req, res) => {
+    client.query(`select * from orders where email = '${req.body.email}'`, (err, result) => {
+        if (err) {
+            res.json(err);
+            console.error(err);
+        } else {
+            let user = result.rows[0];
+            res.json(user)
+        }
+    });
+})
+
+app.post("/submitPaidOrder", (req, res) => {
+    console.log(req.body);
+    // client.query(`insert into users (username) values ('${req.body.username}') returning *`, (err, result) => {
+    //     if (err) {
+    //         res.json(err);
+    //         console.error(err);
+    //     } else {
+    //         let user = result.rows[0];
+    //         res.json(user)
+    //     }
+    // });
     res.json("success?");
 })
 
