@@ -35,6 +35,7 @@ app.get("/", (req, res) => {
     res.sendFile("index.html")
 })
 
+// Send the order to the DB
 app.post("/createOrder", (req, res) => {
     // Simplified data structure
     let form = req.body;
@@ -60,7 +61,6 @@ app.post("/createOrder", (req, res) => {
                 } else {
                     let user = result.rows[0];
                     res.json({
-                        // statusCheck:"ok",
                         message:`Order successfully created for ${user.email}\nYou will be contacted after your order is reviewed.`
                     })
                 }
@@ -69,6 +69,7 @@ app.post("/createOrder", (req, res) => {
     });
 })
 
+// Check if the email already has an order associated with it
 app.post("/orderLookup", (req, res) => {
     client.query(`select * from orders where email = '${req.body.email}'`, (err, result) => {
         if (err) {
