@@ -61,7 +61,7 @@ app.post("/createOrder", (req, res) => {
             })
         } else {
             // If no duplicate then save order to DB
-            client.query(`insert into orders (name, email, number, address_street, address_city, address_state, address_zip, date_needed, layer_1_size, layer_2_size, layer_3_size, layer_4_size, flavor, frosting_fondant, delivery, plates, comments) values ('${form.info.username}', '${form.info.email}', '${form.info.number}', '${form.info.addressStreet}', '${form.info.addressCity}', '${form.info.addressState}', '${form.info.addressZip}', '${form.info.dateNeeded}', '${form.order.layerOneSize}', '${form.order.layerTwoSize}', '${form.order.layerThreeSize}', '${form.order.layerFourSize}', '${form.order.flavor}', '${form.order.frostingFondant}', '${form.order.delivery}', '${form.order.plates}', '${form.order.additionalComments}') returning *`, (err, result) => {
+            client.query(`insert into orders (name, email, number, address_street, address_city, address_state, address_zip, date_needed, layer_1_size, layer_2_size, layer_3_size, layer_4_size, flavor, frosting_fondant, delivery, plates, comments, contact) values ('${form.info.username}', '${form.info.email}', '${form.info.number}', '${form.info.addressStreet}', '${form.info.addressCity}', '${form.info.addressState}', '${form.info.addressZip}', '${form.info.dateNeeded}', '${form.order.layerOneSize}', '${form.order.layerTwoSize}', '${form.order.layerThreeSize}', '${form.order.layerFourSize}', '${form.order.flavor}', '${form.order.frostingFondant}', '${form.order.delivery}', '${form.order.plates}', '${form.order.additionalComments}', '${form.info.contact}') returning *`, (err, result) => {
                 if (err) {
                     console.error(err);
                     res.json({
@@ -92,7 +92,7 @@ app.post("/createOrder", (req, res) => {
     });
 })
 
-// Check if the email already has an order associated with it
+// Search the DB for an order associated with the email they send
 app.post("/orderLookup", (req, res) => {
     client.query(`select * from orders where email = '${req.body.email}'`, (err, result) => {
         if (err) {
@@ -105,6 +105,7 @@ app.post("/orderLookup", (req, res) => {
     });
 })
 
+// Check if the email already has an order associated with it
 app.post("/checkDuplicate", (req, res) => {
     console.log(req.body);
     client.query(`select * from orders where email = '${req.body.email}'`, (err, duplicateResult) => {
