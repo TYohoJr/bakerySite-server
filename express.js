@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const path = require('path');
 var pg = require('pg');
 require('dotenv').config();
-var nodemailer = require('nodemailer');
 
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json({ type: 'application/json' }));
@@ -13,14 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:5432@localhost/postgres";
-
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'tyohojr@gmail.com',
-        pass: process.env.EMAIL_PASS
-    }
-});
 
 // Server will only listen if it can connect to the DB
 var client = new pg.Client(conString);
@@ -68,20 +59,7 @@ app.post("/createOrder", (req, res) => {
                         message: `Order failed: ${err}`
                     });
                 } else {
-                    // After saving the order email the order details to Laura
-                    var mailOptions = {
-                        from: 'tyohojr@gmail.com',
-                        to: 'tyohojr@gmail.com',
-                        subject: `New Cake Order for ${form.info.email}`,
-                        text: `New cake order for ${form.info.email}.\nDate Needed: ${form.info.dateNeeded}\nCustomer Comments: ${form.order.additionalComments}\nView the complete order using the order lookup tool.`
-                    };
-                    transporter.sendMail(mailOptions, function (error, info) {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            console.log('Email sent: ' + info.response);
-                        }
-                    });
+                   // If no error return success message to the front end
                     let user = result.rows[0];
                     res.json({
                         message: `Order successfully created for ${user.email}\nYou will be contacted after your order is reviewed.`
