@@ -21,9 +21,6 @@
     "url": "https://github.com/TYohoJr/bakerySite-server/issues"
   },
   "homepage": "https://github.com/TYohoJr/bakerySite-server#readme",
-  "devDependencies": {
-    "coffee-script": "~1.6.3"
-  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
