@@ -105,23 +105,6 @@ app.post("/orderLookup", (req, res) => {
     });
 })
 
-app.post("/testEmail", (req, res) => {
-    console.log(req.body);
-    var mailOptions = {
-        from: 'tyohojr@gmail.com',
-        to: 'tyohojr@gmail.com',
-        subject: 'New Cake Order',
-        text: req.body.text
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-})
-
 app.post("/checkDuplicate", (req, res) => {
     console.log(req.body);
     client.query(`select * from orders where email = '${req.body.email}'`, (err, duplicateResult) => {
