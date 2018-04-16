@@ -5,7 +5,7 @@
   "main": "server.js",
   "engines": {
     "npm": "5.8.x",
-    "node":"9.5.x"
+    "node": "9.5.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,14 +21,15 @@
     "url": "https://github.com/TYohoJr/bakerySite-server/issues"
   },
   "homepage": "https://github.com/TYohoJr/bakerySite-server#readme",
+  "devDependencies": {
+    "coffee-script": "~1.6.3"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "morgan": "^1.9.0",
-    "nodemailer": "^4.6.4",
     "path": "^0.12.7",
-    "pg": "^7.4.1",
-    "stripe": "^5.8.0"
+    "pg": "^7.4.1"
   }
 }
