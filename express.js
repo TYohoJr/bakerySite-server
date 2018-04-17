@@ -19,18 +19,16 @@ client.connect((err) => {
     if (err) {
         return console.error(err);
     } else {
-        console.log('successfully connected to postgres');
+        console.log('successfully connected to postgres DB');
         app.listen(process.env.PORT || 5000, function () {
             // Log which port the server is listening on
-            if (process.env.PORT) {
-                console.log(`listening on port: ${process.env.PORT}`)
-            } else {
-                console.log("Listening on 5000");
-            }
+            // If process.env.PORT === 5000 then the server is running locally
+            console.log(`listening on port: ${process.env.PORT}`)
         });
     }
 });
 
+// Send index.html on load of the page
 app.get("/", (req, res) => {
     res.sendFile("index.html")
 })
@@ -60,7 +58,7 @@ app.post("/createOrder", (req, res) => {
                         message: `Order failed: ${err}`
                     });
                 } else {
-                   // If no error return success message to the front end
+                    // If no error return success message to the front end
                     let user = result.rows[0];
                     res.json({
                         message: `Order successfully created for ${user.email}\nYou will be contacted after your order is reviewed.`
@@ -93,14 +91,16 @@ app.post("/checkDuplicate", (req, res) => {
                 duplicateCheck: true,
                 message: `Order Failed: ${err}`
             });
+        // The email already has an associated order
         } else if (duplicateResult.rows[0]) {
             res.json({
                 duplicateCheck: true,
                 message: "An order is already associated with this email.\nUse the 'Order Lookup' tool to view the order details"
             })
+        // No order found connected to that email. Proceed.
         } else {
             res.json({
-                message:"no duplicate"
+                message: "no duplicate"
             })
         }
     })
