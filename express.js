@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 app.post("/createOrder", (req, res) => {
     // Simplified data structure
     let form = req.body;
-    console.log(form.time);
+    console.log(form);
     // Check to see if email already has an order
     client.query(`select * from orders where email = '${form.info.email}'`, (err, duplicateResult) => {
         if (err) {
@@ -51,7 +51,7 @@ app.post("/createOrder", (req, res) => {
             })
         } else {
             // If no duplicate then save order to DB
-            client.query(`insert into orders (name, email, number, address_street, address_city, address_state, address_zip, date_needed, layer_1_size, layer_2_size, layer_3_size, layer_4_size, flavor, frosting_fondant, delivery, plates, comments, contact, time) values ('${form.info.username}', '${form.info.email}', '${form.info.number}', '${form.info.addressStreet}', '${form.info.addressCity}', '${form.info.addressState}', '${form.info.addressZip}', '${form.info.dateNeeded}', '${form.order.layerOneSize}', '${form.order.layerTwoSize}', '${form.order.layerThreeSize}', '${form.order.layerFourSize}', '${form.order.flavor}', '${form.order.frostingFondant}', '${form.order.delivery}', '${form.order.plates}', '${form.order.additionalComments}', '${form.info.contact}', '${form.time}') returning *`, (err, result) => {
+            client.query(`insert into orders (name, email, number, address_street, address_city, address_state, address_zip, date_needed, layer_1_size, layer_2_size, layer_3_size, layer_4_size, flavor, frosting_fondant, delivery, plates, comments, contact, time, cookie_style, cookie_amount, cupcake_style, cupcake_amount) values ('${form.info.username}', '${form.info.email}', '${form.info.number}', '${form.info.addressStreet}', '${form.info.addressCity}', '${form.info.addressState}', '${form.info.addressZip}', '${form.info.dateNeeded}', '${form.order.layerOneSize}', '${form.order.layerTwoSize}', '${form.order.layerThreeSize}', '${form.order.layerFourSize}', '${form.order.flavor}', '${form.order.frostingFondant}', '${form.order.delivery}', '${form.order.plates}', '${form.order.additionalComments}', '${form.info.contact}', '${form.time}', '${form.order.cookieStyle}', '${form.order.cookieAmount}', '${form.order.cupcakeStyle}', '${form.order.cupcakeAmount}') returning *`, (err, result) => {
                 if (err) {
                     console.error(err);
                     res.json({
