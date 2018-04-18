@@ -61,7 +61,7 @@ app.post("/createOrder", (req, res) => {
                     // If no error return success message to the front end
                     let user = result.rows[0];
                     res.json({
-                        message: `Order successfully created for ${user.email}\nYou will be contacted after your order is reviewed.`
+                        message: `Order successfully created for ${user.email}\nYour order number is: ${user.id}\nYou will be contacted after your order is reviewed.`
                     })
                 }
             });
