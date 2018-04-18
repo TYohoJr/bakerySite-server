@@ -69,7 +69,7 @@ app.post("/createOrder", (req, res) => {
     });
 })
 
-// Search the DB for an order associated with the email they send
+// Search the DB for an order associated with the email they attempt to use
 app.post("/orderLookup", (req, res) => {
     client.query(`select * from orders where email = '${req.body.email}'`, (err, result) => {
         if (err) {
@@ -91,13 +91,13 @@ app.post("/checkDuplicate", (req, res) => {
                 duplicateCheck: true,
                 message: `Order Failed: ${err}`
             });
-        // The email already has an associated order
+            // The email already has an associated order
         } else if (duplicateResult.rows[0]) {
             res.json({
                 duplicateCheck: true,
                 message: "An order is already associated with this email.\nUse the 'Order Lookup' tool to view the order details"
             })
-        // No order found connected to that email. Proceed.
+            // No order found connected to that email. Proceed.
         } else {
             res.json({
                 message: "no duplicate"
