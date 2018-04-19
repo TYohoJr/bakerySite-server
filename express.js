@@ -20,7 +20,7 @@ client.connect((err) => {
         return console.error(err);
     } else {
         console.log('successfully connected to postgres DB');
-        app.listen(process.env.PORT || 5000, function () {
+        app.listen(process.env.PORT, function () {
             // Log which port the server is listening on
             // If process.env.PORT === 5000 then the server is running locally
             console.log(`listening on port: ${process.env.PORT}`)
@@ -37,7 +37,6 @@ app.get("/", (req, res) => {
 app.post("/createOrder", (req, res) => {
     // Simplified data structure
     let form = req.body;
-    console.log(form);
     // Check to see if email already has an order
     client.query(`select * from orders where email = '${form.info.email}'`, (err, duplicateResult) => {
         if (err) {
@@ -59,7 +58,7 @@ app.post("/createOrder", (req, res) => {
                     });
                 } else {
                     // If no error return success message to the front end
-                    let user = result.rows[0];
+                    let user = result.rows[0]
                     res.json({
                         message: `Order successfully created for ${user.email}\nYour order number is: ${user.id}\nYou will be contacted after your order is reviewed.`
                     })
