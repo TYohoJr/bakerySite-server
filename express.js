@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const morgan = require('morgan');
 const path = require('path');
-var pg = require('pg');
+const pg = require('pg');
 require('dotenv').config();
 
 app.use(express.static(path.join(__dirname, "build")));
@@ -11,10 +11,10 @@ app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-var conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:5432@localhost/postgres";
+const conString = process.env.ELEPHANTSQL_URL || "postgres://postgres:5432@localhost/postgres";
+var client = new pg.Client(conString);
 
 // Server will only listen if it can connect to the DB
-var client = new pg.Client(conString);
 client.connect((err) => {
     if (err) {
         return console.error(err);
